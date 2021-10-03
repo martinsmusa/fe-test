@@ -1,18 +1,18 @@
 import { UPDATE_CATEGORY_LIST } from './Category.action';
 
 import {
-    DataItemListType
+    CategoryDataItemListType
 } from 'Type/ResponseData.type';
 
 export const initialState = {};
 
 const CategoryReducer: (
-    state: DataItemListType,
+    state: CategoryDataItemListType,
     categoryAction: {
         type: string,
-        categories: DataItemListType
+        categories: CategoryDataItemListType
     }
-) => DataItemListType = (state = initialState, { type, categories }) => {
+) => CategoryDataItemListType = (state = initialState, { type, categories }) => {
     switch (type) {
         case UPDATE_CATEGORY_LIST:
             return {

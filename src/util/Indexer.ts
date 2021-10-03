@@ -1,13 +1,23 @@
-import { DataItemListType, DataItemType, ProductDataItemListType } from 'Type/ResponseData.type';
+import { DataItemListType, DataItemType, ProductDataItemListType, CategoryDataItemType, CategoryDataItemListType } from 'Type/ResponseData.type';
+
+const indexArray = (acc: any, item: any) => {
+    const { id, name } = item;
+
+    return {
+        ...acc,
+        [id]: { id, name }
+    };
+}
 
 export const indexArrayById: (arr: DataItemType[]) => DataItemListType = (arr) => {
     return arr.reduce((acc: DataItemListType, item: DataItemType) => {
-        const { id, name } = item;
+        return indexArray(acc, item)
+    }, {});
+};
 
-        return {
-            ...acc,
-            [id]: { id, name }
-        };
+export const indexCategoryArrayById: (arr: CategoryDataItemType[]) => CategoryDataItemListType = (arr) => {
+    return arr.reduce((acc: CategoryDataItemListType, item: CategoryDataItemType) => {
+        return indexArray(acc, item)
     }, {});
 };
 

@@ -1,11 +1,50 @@
-import React from 'react';
+import React, {memo}  from 'react';
+import { connect } from 'react-redux';
 import CategoryItemComponent from './CategoryItem.component';
-import { DataItemType } from 'Type/ResponseData.type';
+import {
+    CategoryDataItemType, DataItemListType,
+    ProductDataItemListType,
+    ProductDataItemType
+} from 'Type/ResponseData.type';
 
-const CategoryItemContainer = (props: { category: DataItemType; }) => {
-    const { category } = props;
+const mapStateToProps = (state: {
+    ProductsReducer: ProductDataItemListType;
+    BrandReducer: DataItemListType
+}) => ({
+    products: state.ProductsReducer,
+    brands: state.BrandReducer
+});
 
-    return <CategoryItemComponent category={ category }/>;
-};
+const CategoryItemContainer = memo((props: {
+    category: CategoryDataItemType;
+    products: ProductDataItemListType;
+    brands: DataItemListType;
+}) => {
+    const {
+        category,
+        category: { id },
+        brands,
+        products
+    } = props;
+    const categoryBrands: DataItemListType = {};
+    const categoryProducts = Object.values(products)
+        .filter((product: ProductDataItemType) => product.categories.indexOf(id) !== -1)
+        .map(({ id }) => id)
+        .reduce((acc, id) => {
+            const product = products[id];
+            categoryBrands[product.brand] = brands[product.brand];
 
-export default CategoryItemContainer;
+            return {
+                ...acc,
+                [id]: product
+            }
+        }, {});
+
+    return <CategoryItemComponent
+        category={ category }
+        products={ categoryProducts }
+        brands={ categoryBrands }
+    />;
+});
+
+export default connect(mapStateToProps)(CategoryItemContainer);

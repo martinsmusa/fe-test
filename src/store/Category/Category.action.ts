@@ -1,10 +1,10 @@
-import { DataItemListType } from 'Type/ResponseData.type';
+import { CategoryDataItemListType } from 'Type/ResponseData.type';
 
 export const UPDATE_CATEGORY_LIST = 'UPDATE_CATEGORY_LIST';
 
-export const updateCategoryList: (categories: DataItemListType) => {
+export const updateCategoryList: (categories: CategoryDataItemListType) => {
     type: string,
-    categories: DataItemListType
+    categories: CategoryDataItemListType
 } = categories => ({
     type: UPDATE_CATEGORY_LIST,
     categories
