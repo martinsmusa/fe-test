@@ -1,9 +1,9 @@
-import React from "react";
-import { CategoryListType } from "Type/Category.type";
+import React from 'react';
+import { DataItemListType } from 'Type/ResponseData.type';
 
 import CategoryItem from 'Component/CategoryItem';
 
-const CategoryListComponent = (props: { categories: CategoryListType; }) => {
+const CategoryListComponent = (props: { categories: DataItemListType; }) => {
     const { categories } = props;
     const categoryList = Object.values(categories || {});
 
@@ -23,14 +23,14 @@ const CategoryListComponent = (props: { categories: CategoryListType; }) => {
                 key={ id }
                 category={ category }
             />
-        )
+        );
     });
 
     return (
         <div>
             { categoryItems }
         </div>
-    )
-}
+    );
+};
 
 export default CategoryListComponent;
