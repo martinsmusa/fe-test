@@ -1,31 +1,27 @@
 import { UPDATE_CATEGORY_LIST } from './Category.action';
 
 import {
-    CategoryType, CategoryListType
-} from "Type/Category.type";
+    DataItemListType
+} from 'Type/ResponseData.type';
 
 export const initialState = {};
 
 const CategoryReducer: (
-    state: CategoryListType,
+    state: DataItemListType,
     categoryAction: {
         type: string,
-        categories: CategoryType[]
+        categories: DataItemListType
     }
-) => CategoryListType = (state = initialState, { type, categories }) => {
-        switch (type) {
-            case UPDATE_CATEGORY_LIST:
-                const indexedList: CategoryListType = categories.reduce((acc, cat) => {
-                    return {
-                        ...acc,
-                        [cat.id]: cat
-                    }
-                }, state);
-
-                return indexedList;
-            default:
-                return state;
-        }
-    };
+) => DataItemListType = (state = initialState, { type, categories }) => {
+    switch (type) {
+        case UPDATE_CATEGORY_LIST:
+            return {
+                ...state,
+                ...categories
+            };
+        default:
+            return state;
+    }
+};
 
 export default CategoryReducer;

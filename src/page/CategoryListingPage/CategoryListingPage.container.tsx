@@ -1,36 +1,60 @@
 import React, { useEffect } from 'react';
 import { Dispatch } from 'redux';
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import dataSet from 'Root/responseData.json';
 import CategoryListingPage from './CategoryListingPage.component';
-import { CategoryDispatcher } from "Store/Category";
-import { CategoryListingContainerProps, CategoryType } from "Type/Category.type";
+import { CategoryDispatcher } from 'Store/Category';
+import { BrandDispatcher } from 'Store/Brand';
+import { ProductSDispatcher } from 'Store/Products';
+import { CategoryListingContainerProps, DataItemListType } from 'Type/ResponseData.type';
+
+// @ts-ignore
+import { indexArrayById, indexProductData } from 'Util/Indexer';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    updateCategoryList: (categories: CategoryType[]) => CategoryDispatcher.updateCategoryList(dispatch, categories)
-})
-
-const propTypes = {
-    updateCategoryList: PropTypes.func.isRequired
-}
+    updateCategoryList: (categories: DataItemListType) => CategoryDispatcher.updateCategoryList(dispatch, categories),
+    updateBrandsList: (brands: DataItemListType) => BrandDispatcher.updateBrandList(dispatch, brands),
+    updateProductsList: (products: DataItemListType) => ProductSDispatcher.updateProductsList(dispatch, products)
+});
 
 export const CategoryListingPageContainer = (props: CategoryListingContainerProps) => {
-    const { updateCategoryList } = props;
+    const { updateCategoryList, updateBrandsList, updateProductsList } = props;
 
     useEffect(() => {
         const categoryJson = dataSet.categories || [];
 
         if (categoryJson && Array.isArray(categoryJson) && categoryJson.length) {
-            const catData = categoryJson.map(({ id, name }) => ({ id, name }));
+            const indexedCatData = indexArrayById(categoryJson);
+            const brands = categoryJson.map(({ brands = [] }) => brands).flat(2);
+            const indexedBrandData = indexArrayById(brands);
+            const indexedProductsData = categoryJson.reduce((acc, cat) => {
+                const { id: catId, brands } = cat;
+                const products = brands.reduce((acc, brand) => {
+                    const { id: brandId, products = [] } = brand;
 
-            updateCategoryList(catData);
+                    return {
+                        ...acc,
+                        ...indexProductData(
+                            products,
+                            brandId,
+                            catId
+                        )
+                    };
+                }, {});
+
+                return {
+                    ...acc,
+                    ...products
+                };
+            }, {});
+
+            updateCategoryList(indexedCatData);
+            updateBrandsList(indexedBrandData);
+            updateProductsList(indexedProductsData);
         }
     }, [updateCategoryList]);
 
-    return <CategoryListingPage />;
-}
-
-CategoryListingPageContainer.prototype = propTypes;
+    return <CategoryListingPage/>;
+};
 
 export default connect(null, mapDispatchToProps)(CategoryListingPageContainer);

@@ -15,14 +15,8 @@
       "Type/*": [
         "./type/*"
       ],
-      "Assets/*": [
-        "./assets/*"
-      ],
-      "Images/*": [
-        "./assets/img/*"
-      ],
-      "Icons/*": [
-        "./assets/icons/*"
+      "Util/*": [
+        "./util/*"
       ]
     }
   }
