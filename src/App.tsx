@@ -1,11 +1,13 @@
 import React from 'react';
 
+import CategoryListingPage from "Page/CategoryListingPage";
+
 function App() {
     return (
         <div className="App">
-            <header className="App-header">
-                header goes here
-            </header>
+            <div>
+                <CategoryListingPage />
+            </div>
         </div>
     );
 }

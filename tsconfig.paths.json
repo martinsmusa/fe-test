@@ -2,23 +2,23 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "Component": [
-        "./component"
+      "Component/*": [
+        "./component/*"
       ],
-      "Page": [
-        "./page"
+      "Page/*": [
+        "./page/*"
       ],
-      "Store": [
-        "./store"
+      "Store/*": [
+        "./store/*"
       ],
-      "Assets": [
-        "./assets"
+      "Assets/*": [
+        "./assets/*"
       ],
-      "Images": [
-        "./assets/img"
+      "Images/*": [
+        "./assets/img/*"
       ],
-      "Icons": [
-        "./assets/icons"
+      "Icons/*": [
+        "./assets/icons/*"
       ]
     }
   }
