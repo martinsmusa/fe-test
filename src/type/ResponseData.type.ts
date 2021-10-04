@@ -23,3 +23,24 @@ export interface ProductDataItemListType {
 export interface CategoryDataItemListType {
     [key: string]: CategoryDataItemType;
 }
+
+export interface ProductType {
+    id: number;
+    name: string;
+}
+
+export interface FullBrandType {
+    id: number;
+    name: string;
+    products: ProductType[]
+}
+
+export interface FullCategoryType {
+    id: string;
+    name: string;
+    brands: FullBrandType[]
+}
+
+export interface FullCategoryTypeListType {
+    [key: string]: FullCategoryType;
+}

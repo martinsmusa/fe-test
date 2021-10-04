@@ -1,13 +1,13 @@
 import React, { memo } from 'react';
 import { connect } from 'react-redux';
 import CategoryListComponent from './CategoryList.component';
-import { CategoryDataItemListType } from 'Type/ResponseData.type';
+import { FullCategoryTypeListType } from 'Type/ResponseData.type';
 
-const mapStateToProps = (state: { CategoryReducer: CategoryDataItemListType; }) => ({
-    categories: state.CategoryReducer
+const mapStateToProps = (state: { NestedCategoryReducer: FullCategoryTypeListType; }) => ({
+    categories: state.NestedCategoryReducer
 });
 
-const CategoryListContainer = memo((props: { categories: CategoryDataItemListType; }) => {
+const CategoryListContainer = memo((props: { categories: FullCategoryTypeListType; }) => {
     const { categories } = props;
 
     return Object.keys(categories) && (

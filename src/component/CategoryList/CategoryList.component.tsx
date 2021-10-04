@@ -1,9 +1,9 @@
 import React from 'react';
-import { CategoryDataItemListType } from 'Type/ResponseData.type';
+import { FullCategoryTypeListType } from 'Type/ResponseData.type';
 
 import CategoryItem from 'Component/CategoryItem';
 
-const CategoryListComponent = (props: { categories: CategoryDataItemListType; }) => {
+const CategoryListComponent = (props: { categories: FullCategoryTypeListType; }) => {
     const { categories } = props;
     const categoryList = Object.values(categories || {});
 

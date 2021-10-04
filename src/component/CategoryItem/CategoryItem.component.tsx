@@ -1,20 +1,34 @@
 import React from 'react';
-import { DataItemType, DataItemListType, ProductDataItemListType } from 'Type/ResponseData.type';
+import {
+    FullBrandType,
+    FullCategoryType
+} from 'Type/ResponseData.type';
 
 import Brand from 'Component/Brand';
 import Product from 'Component/Product';
 
 const CategoryItemComponent = (props: {
-    category: DataItemType;
-    brands: DataItemListType;
-    products: ProductDataItemListType;
+    category: FullCategoryType;
+    brands: FullBrandType[];
 }) => {
-    const { category: { name }, brands, products } = props;
+    const { category: { name, id: categoryId }, brands } = props;
 
-    const brandComponents = Object.values(brands).map(({ name, id }) => {
-        const brandProducts = Object.values(products).map(product => {
+    const brandComponents = brands.map(({ name, id, products }) => {
+        if (!products.length) {
+            return null;
+        }
+
+        const brandProducts = products.map(product => {
             return (
-                <Product key={ `product-${ product.id }` } name={ product.name }/>
+                <Product
+                    key={ `product-${ product.id }` }
+                    name={ product.name }
+                    path={{
+                        category: categoryId,
+                        brand: id,
+                        product: product.id
+                    }}
+                />
             );
         });
 
@@ -22,6 +36,10 @@ const CategoryItemComponent = (props: {
             <Brand
                 key={ `brand-${ id }` }
                 name={ name }
+                path={{
+                    category: categoryId,
+                    brand: id,
+                }}
             >
                 { brandProducts }
             </Brand>
@@ -30,7 +48,15 @@ const CategoryItemComponent = (props: {
 
     return (
         <div className="CategoryItem">
-            <h4>{ name }</h4>
+            <h2 className="name">{ name }</h2>
+            <div className="delete">
+                <button
+                    type="button"
+                    onClick={ () => {} }
+                >
+                    Delete
+                </button>
+            </div>
             <div className="brands">
                 { brandComponents }
             </div>
