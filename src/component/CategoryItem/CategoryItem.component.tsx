@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     FullBrandType,
-    FullCategoryType
+    FullCategoryType, PathType
 } from 'Type/ResponseData.type';
 
 import Brand from 'Component/Brand';
@@ -10,8 +10,13 @@ import Product from 'Component/Product';
 const CategoryItemComponent = (props: {
     category: FullCategoryType;
     brands: FullBrandType[];
+    deleteCallback: (path: PathType) => void
 }) => {
-    const { category: { name, id: categoryId }, brands } = props;
+    const {
+        category: { name, id: categoryId },
+        brands,
+        deleteCallback
+    } = props;
 
     const brandComponents = brands.map(({ name, id, products }) => {
         if (!products.length) {
@@ -23,11 +28,12 @@ const CategoryItemComponent = (props: {
                 <Product
                     key={ `product-${ product.id }` }
                     name={ product.name }
-                    path={{
+                    path={ {
                         category: categoryId,
                         brand: id,
                         product: product.id
-                    }}
+                    } }
+                    deleteCallback={ deleteCallback }
                 />
             );
         });
@@ -36,10 +42,11 @@ const CategoryItemComponent = (props: {
             <Brand
                 key={ `brand-${ id }` }
                 name={ name }
-                path={{
+                path={ {
                     category: categoryId,
-                    brand: id,
-                }}
+                    brand: id
+                } }
+                deleteCallback={ deleteCallback }
             >
                 { brandProducts }
             </Brand>
@@ -47,12 +54,12 @@ const CategoryItemComponent = (props: {
     });
 
     return (
-        <div className="CategoryItem">
+        <div className="CategoryItem" key={ categoryId }>
             <h2 className="name">{ name }</h2>
             <div className="delete">
                 <button
                     type="button"
-                    onClick={ () => {} }
+                    onClick={ deleteCallback.bind(this, { category: categoryId }) }
                 >
                     Delete
                 </button>
