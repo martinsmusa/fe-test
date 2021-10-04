@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 
 import AddCategoryForm from 'Component/AddCategoryForm';
 import AddBrandForm from 'Component/AddBrandForm';
+import AdProductForm from 'Component/AddProductForm';
 import Modal from 'Component/Modal';
 import { FullCategoryTypeListType } from "Type/ResponseData.type";
 
@@ -49,6 +50,21 @@ const ActionsComponent = (
         )
     }
 
+    const renderAddProduct = ({ title }: { title: string }) => {
+        if (!Object.keys(categories).length) {
+            return null;
+        }
+
+        return (
+            <Modal
+                title={ title }
+                onClose={ onClose }
+            >
+                <AdProductForm onClose={ onClose }/>
+            </Modal>
+        )
+    }
+
     const renderMap = {
         [ADD_ACTION_CATEGORY]: {
             render: renderAddCategory
@@ -56,7 +72,9 @@ const ActionsComponent = (
         [ADD_ACTION_BRAND]: {
             render: renderAddBrand
         },
-        [ADD_ACTION_PRODUCT]: {}
+        [ADD_ACTION_PRODUCT]: {
+            render: renderAddProduct
+        }
     };
 
     const actions = Object.values(ACTIONS_LIST || {}).map(({ title, value }) => {

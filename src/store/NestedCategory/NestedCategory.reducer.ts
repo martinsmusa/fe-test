@@ -1,6 +1,12 @@
-import { ADD_BRAND, DELETE_NESTED_ITEM, UPDATE_NESTED_CATEGORY_LIST } from './NestedCategory.action';
+import { ADD_BRAND, ADD_PRODUCT, DELETE_NESTED_ITEM, UPDATE_NESTED_CATEGORY_LIST } from './NestedCategory.action';
 
-import { CategoryDataItemListType, FullBrandType, FullCategoryTypeListType, PathType } from 'Type/ResponseData.type';
+import {
+    CategoryDataItemListType,
+    FullBrandType,
+    FullCategoryTypeListType,
+    PathType,
+    ProductType
+} from 'Type/ResponseData.type';
 
 export const initialState = {};
 
@@ -10,11 +16,18 @@ const NestedCategoryReducer: (
         type: string,
         categories?: FullCategoryTypeListType,
         path?: PathType,
-        brand?: FullBrandType
+        brand?: FullBrandType,
+        product?: ProductType,
     }
 ) => CategoryDataItemListType = (
     state = initialState,
-    { type, categories, path, brand }
+    {
+        type,
+        categories,
+        path,
+        brand,
+        product
+    }
 ) => {
     switch (type) {
         case UPDATE_NESTED_CATEGORY_LIST:
@@ -110,6 +123,32 @@ const NestedCategoryReducer: (
                         brand,
                         ...brandList
                     ]
+                }
+            };
+        case ADD_PRODUCT:
+            const { category: catId, brand: brandPathId } = path || {};
+
+            if (!catId || !brandPathId) {
+                return state;
+            }
+
+            const updatedBrandItemList = state[catId]?.brands.map(brand => {
+                if (brand.id !== brandPathId) return brand;
+
+                return {
+                    ...brand,
+                    products: [
+                        ...brand.products,
+                        product
+                    ]
+                }
+            });
+
+            return {
+                ...state,
+                [catId]: {
+                    ...state[catId],
+                    brands: updatedBrandItemList
                 }
             };
         default:
