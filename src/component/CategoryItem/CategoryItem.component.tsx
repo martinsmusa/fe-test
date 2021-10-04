@@ -54,17 +54,20 @@ const CategoryItemComponent = (props: {
     });
 
     return (
-        <div className="CategoryItem" key={ categoryId }>
-            <h2 className="name">{ name }</h2>
-            <div className="delete">
-                <button
-                    type="button"
-                    onClick={ deleteCallback.bind(this, { category: categoryId }) }
-                >
-                    Delete
-                </button>
+        <div className="CategoryItem List" key={ categoryId }>
+            <div className="header">
+                <h2 className="name">{ name }</h2>
+                <div className="delete">
+                    <button
+                        type="button"
+                        onClick={ deleteCallback.bind(this, { category: categoryId }) }
+                    >
+                        Delete
+                    </button>
+                </div>
             </div>
-            <div className="brands">
+
+            <div className="BrandsList List">
                 { brandComponents }
             </div>
         </div>
