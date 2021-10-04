@@ -44,3 +44,9 @@ export interface FullCategoryType {
 export interface FullCategoryTypeListType {
     [key: string]: FullCategoryType;
 }
+
+export interface PathType {
+    category: string;
+    brand?: number;
+    product?: number
+}
