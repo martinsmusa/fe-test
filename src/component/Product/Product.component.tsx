@@ -14,14 +14,16 @@ const ProductComponent = (props: {
 
     return (
         <div className="product">
-            <h4 className="name">{ name }</h4>
-            <div className="delete">
-                <button
-                    type="button"
-                    onClick={ deleteCallback.bind(this, path ) }
-                >
-                    Delete
-                </button>
+            <div className="header">
+                <h4 className="name">{ name }</h4>
+                <div className="delete">
+                    <button
+                        type="button"
+                        onClick={ deleteCallback.bind(this, path ) }
+                    >
+                        Delete
+                    </button>
+                </div>
             </div>
         </div>
     );
