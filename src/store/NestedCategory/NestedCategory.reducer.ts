@@ -1,20 +1,20 @@
-import { UPDATE_CATEGORY_LIST } from './Category.action';
+import { UPDATE_NESTED_CATEGORY_LIST } from './NestedCategory.action';
 
 import {
-    CategoryDataItemListType
+    CategoryDataItemListType, FullCategoryTypeListType
 } from 'Type/ResponseData.type';
 
 export const initialState = {};
 
-const CategoryReducer: (
-    state: CategoryDataItemListType,
+const NestedCategoryReducer: (
+    state: FullCategoryTypeListType,
     categoryAction: {
         type: string,
-        categories: CategoryDataItemListType
+        categories: FullCategoryTypeListType
     }
 ) => CategoryDataItemListType = (state = initialState, { type, categories }) => {
     switch (type) {
-        case UPDATE_CATEGORY_LIST:
+        case UPDATE_NESTED_CATEGORY_LIST:
             return {
                 ...state,
                 ...categories
@@ -24,4 +24,4 @@ const CategoryReducer: (
     }
 };
 
-export default CategoryReducer;
+export default NestedCategoryReducer;

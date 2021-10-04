@@ -3,6 +3,10 @@ export interface DataItemType {
     name: string;
 }
 
+export interface CategoryDataItemType extends DataItemType {
+    id: string;
+}
+
 export interface ProductDataItemType extends DataItemType {
     categories: string[],
     brand: string
@@ -13,13 +17,30 @@ export interface DataItemListType {
 }
 
 export interface ProductDataItemListType {
-    [key: string | number]: ProductDataItemType;
+    [key: number]: ProductDataItemType;
 }
 
-export interface CategoryListingContainerProps {
-    updateCategoryList(categories: DataItemListType): void,
+export interface CategoryDataItemListType {
+    [key: string]: CategoryDataItemType;
+}
 
-    updateBrandsList(brands: DataItemListType): void,
+export interface ProductType {
+    id: number;
+    name: string;
+}
 
-    updateProductsList(products: DataItemListType): void,
+export interface FullBrandType {
+    id: number;
+    name: string;
+    products: ProductType[]
+}
+
+export interface FullCategoryType {
+    id: string;
+    name: string;
+    brands: FullBrandType[]
+}
+
+export interface FullCategoryTypeListType {
+    [key: string]: FullCategoryType;
 }

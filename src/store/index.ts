@@ -5,11 +5,13 @@ import {
 import { CategoryReducer } from 'Store/Category';
 import { BrandReducer } from 'Store/Brand';
 import { ProductsReducer } from 'Store/Products';
+import { NestedCategoryReducer } from 'Store/NestedCategory';
 
 export const reducers = {
     CategoryReducer,
     BrandReducer,
-    ProductsReducer
+    ProductsReducer,
+    NestedCategoryReducer
 };
 
 const store = createStore(

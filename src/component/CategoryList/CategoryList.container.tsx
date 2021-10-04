@@ -1,20 +1,20 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { connect } from 'react-redux';
 import CategoryListComponent from './CategoryList.component';
-import { DataItemListType } from 'Type/ResponseData.type';
+import { FullCategoryTypeListType } from 'Type/ResponseData.type';
 
-const mapStateToProps = (state: { CategoryReducer: DataItemListType; }) => ({
-    categories: state.CategoryReducer
+const mapStateToProps = (state: { NestedCategoryReducer: FullCategoryTypeListType; }) => ({
+    categories: state.NestedCategoryReducer
 });
 
-const CategoryListContainer = (props: { categories: DataItemListType; }) => {
+const CategoryListContainer = memo((props: { categories: FullCategoryTypeListType; }) => {
     const { categories } = props;
 
-    return (
+    return Object.keys(categories) && (
         <>
             <CategoryListComponent categories={ categories }/>
         </>
     );
-};
+});
 
 export default connect(mapStateToProps)(CategoryListContainer);
