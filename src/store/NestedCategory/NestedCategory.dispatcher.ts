@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 
-import { updateNestedCategoryList, deleteItem } from './NestedCategory.action';
-import { CategoryDataItemType, FullCategoryTypeListType, PathType } from 'Type/ResponseData.type';
+import { updateNestedCategoryList, deleteItem, addBrand } from './NestedCategory.action';
+import { CategoryDataItemType, FullBrandType, FullCategoryTypeListType, PathType } from 'Type/ResponseData.type';
 
 
 export class NestedCategoryDispatcher {
@@ -22,6 +22,10 @@ export class NestedCategoryDispatcher {
         };
 
         dispatch(updateNestedCategoryList(categoryListItem));
+    }
+
+    addBrand = (dispatch: Dispatch, brand: FullBrandType, categoryId: string) => {
+        dispatch(addBrand(brand, { category: categoryId }));
     }
 }
 

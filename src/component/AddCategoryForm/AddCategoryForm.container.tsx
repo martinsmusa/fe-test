@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { uuid } from 'uuidv4';
 
 import AddCategoryFormComponent from "./AddCategoryForm.component";
 import { NestedCategoryDispatcher } from "Store/NestedCategory";
@@ -25,7 +24,7 @@ const AddCategoryFormContainer = (props: {
 
         addCategory({
             name: value,
-            id: uuid()
+            id: Date.now().toString()
         });
 
         onClose();

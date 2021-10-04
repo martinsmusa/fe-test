@@ -28,6 +28,20 @@
 
     &-header {
         display: flex;
+        background: lightgray;
         justify-content: space-between;
+        padding: 5px;
+        margin-bottom: 20px;
+    }
+
+    &-content {
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .field {
+            margin-top: 15px;
+        }
     }
 }

@@ -1,6 +1,6 @@
-import {DELETE_NESTED_ITEM, UPDATE_NESTED_CATEGORY_LIST} from './NestedCategory.action';
+import { ADD_BRAND, DELETE_NESTED_ITEM, UPDATE_NESTED_CATEGORY_LIST } from './NestedCategory.action';
 
-import {CategoryDataItemListType, FullCategoryTypeListType, PathType} from 'Type/ResponseData.type';
+import { CategoryDataItemListType, FullBrandType, FullCategoryTypeListType, PathType } from 'Type/ResponseData.type';
 
 export const initialState = {};
 
@@ -9,9 +9,13 @@ const NestedCategoryReducer: (
     categoryAction: {
         type: string,
         categories?: FullCategoryTypeListType,
-        path?: PathType
+        path?: PathType,
+        brand?: FullBrandType
     }
-) => CategoryDataItemListType = (state = initialState, { type, categories, path }) => {
+) => CategoryDataItemListType = (
+    state = initialState,
+    { type, categories, path, brand }
+) => {
     switch (type) {
         case UPDATE_NESTED_CATEGORY_LIST:
             return {
@@ -64,7 +68,7 @@ const NestedCategoryReducer: (
                  */
                 const brands = categoryToUpdate.brands;
                 const brandToUpdate = brands[brandLocation];
-                const brandsToKeep = brands.slice(brandLocation + 1);
+                const brandsToKeep = brands.filter(({id}) => id !== brandId);
                 const productListToUpdate = brandToUpdate.products || [];
                 const updatedProductList = productListToUpdate.filter(product => productId !== product.id);
 
@@ -72,20 +76,42 @@ const NestedCategoryReducer: (
                     ...brandToUpdate,
                     products: updatedProductList
                 }
+                const updatedBrandList = [
+                    updatedBrand,
+                    ...brandsToKeep
+                ];
 
-                brandsToKeep.push(updatedBrand);
-                brandsToKeep.sort((a, b) => a.id - b.id);
+                updatedBrandList.sort((a, b) => a.id - b.id);
 
                 return {
                     ...state,
                     [categoryId]: {
                         ...categoryToUpdate,
-                        brands: brandsToKeep
+                        brands: updatedBrandList
                     }
                 };
             }
 
             return state;
+        case ADD_BRAND:
+            const { category } = path || {};
+
+            if (!category || !brand) {
+                return state;
+            }
+
+            const brandList = state[category]?.brands;
+
+            return {
+                ...state,
+                [category]: {
+                    ...state[category],
+                    brands: [
+                        brand,
+                        ...brandList
+                    ]
+                }
+            };
         default:
             return state;
     }

@@ -19,10 +19,6 @@ const CategoryItemComponent = (props: {
     } = props;
 
     const brandComponents = brands.map(({ name, id, products }) => {
-        if (!products.length) {
-            return null;
-        }
-
         const brandProducts = products.map(product => {
             return (
                 <Product

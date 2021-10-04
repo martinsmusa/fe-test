@@ -5,11 +5,18 @@ const AddCategoryFormComponent = (props: { onSubmit: any; }) => {
 
     return (
         <form onSubmit={ onSubmit }>
-            <label>
-                Category Name:
-                <input type="text" name="name"/>
-            </label>
-            <input type="submit" value="Submit"/>
+            <div className="field">
+                <label>
+                    Category Name:
+                    <input type="text" name="name"/>
+                </label>
+            </div>
+            <div className="field">
+                <label>
+                    Save Category:
+                    <input type="submit" value="Save"/>
+                </label>
+            </div>
         </form>
     )
 }

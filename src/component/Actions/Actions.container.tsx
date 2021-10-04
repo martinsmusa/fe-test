@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
-import ActionsComponent from './Actions.component';
+import { connect } from 'react-redux';
 
-const ActionsContainer = () => {
+import ActionsComponent from './Actions.component';
+import { FullCategoryTypeListType } from "Type/ResponseData.type";
+
+const mapStateToProps = (state: { NestedCategoryReducer: FullCategoryTypeListType; }) => ({
+    categories: state.NestedCategoryReducer
+})
+
+const ActionsContainer = (props: { categories: FullCategoryTypeListType; }) => {
+    const { categories } = props;
     const [activeModal, setActiveModal] = useState(null);
 
     const setModal = (e: { target: { value: React.SetStateAction<null> } } | null) => {
@@ -12,7 +20,11 @@ const ActionsContainer = () => {
         setActiveModal(e.target.value);
     }
 
-    return <ActionsComponent setActiveModal={ setModal } activeModal={ activeModal }/>;
+    return <ActionsComponent
+        setActiveModal={ setModal }
+        activeModal={ activeModal }
+        categories={ categories }
+    />;
 }
 
-export default ActionsContainer;
+export default connect(mapStateToProps)(ActionsContainer);

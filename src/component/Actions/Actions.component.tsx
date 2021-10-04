@@ -1,7 +1,9 @@
 import React, { useCallback } from "react";
 
 import AddCategoryForm from 'Component/AddCategoryForm';
+import AddBrandForm from 'Component/AddBrandForm';
 import Modal from 'Component/Modal';
+import { FullCategoryTypeListType } from "Type/ResponseData.type";
 
 import {
     ACTIONS_LIST,
@@ -10,8 +12,14 @@ import {
     ADD_ACTION_PRODUCT
 } from "Component/Actions/Actions.config";
 
-const ActionsComponent = (props: { setActiveModal: any; activeModal: any; }) => {
-    const { setActiveModal, activeModal } = props;
+const ActionsComponent = (
+    props: {
+        setActiveModal: any;
+        activeModal: any;
+        categories: FullCategoryTypeListType
+    }
+) => {
+    const { setActiveModal, activeModal, categories } = props;
 
     const onClose = useCallback(() => setActiveModal(null), [setActiveModal]);
 
@@ -26,11 +34,28 @@ const ActionsComponent = (props: { setActiveModal: any; activeModal: any; }) => 
         )
     }
 
+    const renderAddBrand = ({ title }: { title: string }) => {
+        if (!Object.keys(categories).length) {
+            return null;
+        }
+
+        return (
+            <Modal
+                title={ title }
+                onClose={ onClose }
+            >
+                <AddBrandForm onClose={ onClose }/>
+            </Modal>
+        )
+    }
+
     const renderMap = {
         [ADD_ACTION_CATEGORY]: {
             render: renderAddCategory
         },
-        [ADD_ACTION_BRAND]: {},
+        [ADD_ACTION_BRAND]: {
+            render: renderAddBrand
+        },
         [ADD_ACTION_PRODUCT]: {}
     };
 
